@@ -1,0 +1,6 @@
+[submodule "frontend-service-search"]
+	path = frontend-service-search
+	url = https://github.com/consultbibek-beep/frontend-service-search.git
+[submodule "textgen-service-rag"]
+	path = textgen-service-rag
+	url = https://github.com/consultbibek-beep/textgen-service-rag.git
