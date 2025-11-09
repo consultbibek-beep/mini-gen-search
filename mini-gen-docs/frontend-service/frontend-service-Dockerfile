@@ -1,0 +1,24 @@
+# mini-gen/frontend-service/Dockerfile
+# Start from an official, small Python image (version 3.11).
+FROM python:3.11-slim
+
+# Create and switch to the application directory inside the container.
+WORKDIR /app
+
+# Copy the requirements file (requirements.txt, though the pyproject.toml implies a modern setup, 
+# Dockerfiles often use requirements.txt).
+COPY requirements.txt .
+# Install Python dependencies using pip. '--no-cache-dir' keeps the final image size small.
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the main application file into the container.
+COPY app.py .
+
+# Inform Docker that the application runs on internal port 5000.
+# This port is mapped to host port 8080 in docker-compose.yml.
+EXPOSE 5000
+
+# Set an environment variable for Flask to run in production mode (for security/performance).
+ENV FLASK_ENV=production
+# The final command to run when the container starts: executes the Flask application.
+CMD ["python", "app.py"]

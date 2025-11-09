@@ -1,0 +1,74 @@
+# mini-gen/docker-compose.yml
+
+# Specifies the version of the Docker Compose file format syntax being used.
+version: "3.8"
+
+# The 'services' block defines each container/microservice in the application.
+services:
+  # --- 1. Frontend Service Definition ---
+  frontend:
+    # 'build' instructs Docker to look in the 'frontend-service' directory
+    # and use the Dockerfile found there to create the image.
+    build:
+      context: ./frontend-service
+      dockerfile: Dockerfile
+      
+    # Assigns a readable, permanent name to the running container instance.
+    container_name: mini-gen-frontend
+    
+    # 'ports' maps traffic from the host machine (left, 8080) to the internal 
+    # container port (right, 5000). This is how users access the web app.
+    ports:
+      - "8080:5000"
+      
+    # Sets an environment variable inside this container. This variable tells the 
+    # frontend where to find the textgen service *internally* on the Docker network.
+
+    #Error fix: 
+    # In Docker Compose, the service name you define in the docker-compose.yml automatically becomes the internal network hostname.
+    # Your Hostname is: textgen (from services: textgen:)
+    # Your Frontend is Looking For: textgen-service (from the environment variable value: TEXTGEN_HOST=http://textgen-service:5001)
+    # To fix this, we need to update the value of the TEXTGEN_HOST environment variable in your docker-compose.yml to use the correct service name, textgen
+
+
+    environment:
+      - TEXTGEN_HOST=http://textgen:5001
+      
+    # Ensures the 'textgen' service is started and healthy before attempting 
+    # to start the 'frontend' service.
+    depends_on:
+      - textgen
+      
+    # Assigns this service to the custom private network named 'mini-net'.
+    networks:
+      - mini-net
+
+  # --- 2. TextGen (Backend) Service Definition ---
+  textgen:
+    # 'build' instructs Docker to create the image using the 'textgen-service' directory.
+    build:
+      context: ./textgen-service
+      dockerfile: Dockerfile
+      
+    # Assigns a readable, permanent name to the container.
+    container_name: mini-gen-textgen
+    
+    # 'env_file' securely loads environment variables (like GROQ_API_KEY) from 
+    # the root '.env' file into this container.
+    env_file:
+      - .env
+      
+    # 'expose' makes port 5001 available *only* to other linked services 
+    # (like the frontend) within the 'mini-net' network, keeping it private.
+    expose:
+      - "5001"
+      
+    # Assigns this service to the custom private network named 'mini-net'.
+    networks:
+      - mini-net
+
+# The 'networks' section defines a custom, isolated network for the services.
+networks:
+  mini-net:
+    # 'driver: bridge' is the standard type for local container networking.
+    driver: bridge

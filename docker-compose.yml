@@ -1,0 +1,35 @@
+# mini-gen/docker-compose.yml
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./frontend-service
+      dockerfile: Dockerfile
+    container_name: mini-gen-frontend
+    ports:
+      - "8080:5000"
+    environment:
+      - TEXTGEN_HOST=http://textgen:5001
+    depends_on:
+      - textgen
+    networks:
+      - mini-net
+
+  textgen:
+    build:
+      context: ./textgen-service
+      dockerfile: Dockerfile
+    container_name: mini-gen-textgen
+    env_file:
+      - .env
+    expose:
+      - "5001"
+    networks:
+      - mini-net
+
+networks:
+  mini-net:
+    driver: bridge
+
+

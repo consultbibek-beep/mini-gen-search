@@ -1,0 +1,138 @@
+# mini-gen/k8s-manifests/k8s-manifests.yaml
+# This manifest uses variable substitution ($GROQ_API_KEY)
+# which is resolved by deploy_instructions.sh before being sent to kubectl.
+# Execution command example: kubectl apply -f mini-gen/k8s-manifests/k8s-manifests.yaml
+---
+
+# 1. ConfigMap for Environment Variables (API Key)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: textgen-config
+data:
+  # The value is set to a shell variable reference.
+  # THIS MUST BE $GROQ_API_KEY. The shell script will replace this before deployment.
+  GROQ_API_KEY: $GROQ_API_KEY
+
+---
+
+# 2. TextGen (Backend) Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: textgen-deployment
+  labels:
+    app: textgen
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: textgen
+  template:
+    metadata:
+      labels:
+        app: textgen
+    spec:
+      containers:
+        - name: textgen-api
+          # Use the tag you will build locally (e.g., mini-gen/textgen:latest)
+          # After move to dockerhub
+          # image: mini-gen/textgen:latest
+          # imagePullPolicy: Never # Instructs K8s to use the local Docker Desktop image
+          # image: consultbibek/mini-gen-textgen:latest
+          # CI/CD changes to always pull from Docker Hub based on github actions
+          # image: consultbibek/mini-gen-textgen:${{ env.SHORT_SHA }}
+          # CI/CD changes to always pull from Docker Hub based on github actions
+          image: consultbibek/mini-gen-textgen:latest
+          imagePullPolicy: IfNotPresent  # allows reuse if already cached locally
+          ports:
+            - containerPort: 5001
+          env:
+            # This defines the GROQ_API_KEY environment variable inside the container
+            # and tells it to pull the value from the 'textgen-config' ConfigMap.
+            - name: GROQ_API_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: textgen-config
+                  key: GROQ_API_KEY
+            # Added for clarity, but not strictly necessary:
+            # Also define the host for the frontend to connect to internally
+            # - name: TEXTGEN_HOST
+            #   value: "http://textgen:5001" # Internal K8s Service Name
+
+---
+
+# 3. TextGen (Backend) Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: textgen # This is the internal DNS name used by the frontend
+  labels:
+    app: textgen
+spec:
+  type: ClusterIP
+  selector:
+    app: textgen
+  ports:
+    - protocol: TCP
+      port: 5001
+      targetPort: 5001
+
+---
+
+# 4. Frontend Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend-web
+          # Use the tag you will build locally (e.g., mini-gen/frontend:latest)
+          # After move to dockerhub
+          # image: mini-gen/frontend:latest
+          # imagePullPolicy: Never
+          # image: consultbibek/mini-gen-frontend:latest  # pulled from Docker Hub
+          # CI/CD changes to always pull from Docker Hub based on github actions
+          # image: consultbibek/mini-gen-frontend:${{ env.SHORT_SHA }}
+          # CI/CD changes to always pull from Docker Hub based on github actions
+          image: consultbibek/mini-gen-frontend:latest
+          # imagePullPolicy: IfNotPresent  # allows reuse if already cached locally
+          imagePullPolicy: Always  # ensure latest is always pulled
+          ports:
+            - containerPort: 5000
+          env:
+            # Configure the environment variable to point to the internal K8s service name.
+            - name: TEXTGEN_HOST
+              value: "http://textgen:5001" # Matches the Service name above
+
+---
+
+# 5. Frontend (Web UI) Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  labels:
+    app: frontend
+spec:
+  # NodePort makes the service reachable on a high port (30000-32767) on the host machine.
+  type: NodePort
+  selector:
+    app: frontend
+  ports:
+    - protocol: TCP
+      port: 80          # The service listens on port 80
+      targetPort: 5000  # Forwards traffic to the container's port 5000
+      # nodePort will be dynamically assigned by K8s

@@ -1,0 +1,29 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Environment variables
+.env
+
+# Ignore submodules
+# textgen-service/
+# frontend-service/
+
+# Byte-compiled files
+*.pyc
+
+# Compiled Python files
+__pycache__/
+
+# macOS system files
+.DS_Store
+
+frontend-service-search/
+textgen-service-rag/
