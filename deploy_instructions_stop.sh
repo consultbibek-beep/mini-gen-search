@@ -1,7 +1,7 @@
 #!/bin/bash
 # ==============================================================================
 # deploy_instructions_stop.sh
-# Stops and removes all deployed Kubernetes resources for the mini-gen project.
+# Stops and removes all deployed Kubernetes resources for the mini-gen-search project.
 # Uses 'set -x' to print commands before execution and verifies cleanup.
 # ==============================================================================
 
@@ -9,7 +9,8 @@ set -e # Exit immediately if any command fails
 set -x # Enable command execution tracing (prints commands before they run)
 
 echo "-----------------------------------------------------------"
-echo "🛑 Stopping and cleaning up Kubernetes resources for mini-gen"
+# MODIFIED: Updated project name in message
+echo "🛑 Stopping and cleaning up Kubernetes resources for mini-gen-search"
 echo "-----------------------------------------------------------"
 
 # 1. Delete all resources defined in k8s-manifests.yaml

@@ -2,24 +2,46 @@
 # ==============================================================================
 # deploy_instructions.sh
 # Automates Kubernetes deployment for the mini-gen project.
-# Uses unique Git SHAs for image tags and Docker Hub PAT for authentication.
+# Updated to use new service directory names:
+# - frontend-service-search
+# - textgen-service-rag
 # ==============================================================================
 
-set -e # Exit immediately if any command fails
+# ------------------------------------------------------------------------------
+# SETUP LOGGING
+# ------------------------------------------------------------------------------
+LOG_DIR="log"
+LOG_FILE="$LOG_DIR/deploy_instr.log"
+
+# Create the log directory if it doesn't exist
+mkdir -p "$LOG_DIR" || { echo "❌ FATAL: Could not create log directory '$LOG_DIR'. Exiting."; exit 1; }
+
+# Start logging: Redirect stdout (1) and stderr (2) to a function that uses tee
+exec > >(tee -a "$LOG_FILE") 2>&1
+
+echo "==========================================================="
+echo "🪵 Starting Deployment Logging"
+echo "Log file: $LOG_FILE"
+echo "Timestamp: $(date '+%Y-%m-%d %H:%M:%S')"
+echo "==========================================================="
+
+# Exit immediately if any command fails. This ensures the failure message is logged before exit.
+set -e 
 
 echo "-----------------------------------------------------------"
-echo "🚀 Starting Kubernetes deployment for mini-gen"
+echo "🚀 Starting Kubernetes deployment for mini-gen-search"
 echo "-----------------------------------------------------------"
 
 # ------------------------------------------------------------------------------
-# STEP 1: Load environment variables from .env file
+# STEP 1: Load environment variables from .env file (Robust validation kept)
 # ------------------------------------------------------------------------------
+echo "--- STEP 1: Load Environment Variables ---"
 if [ ! -f .env ]; then
   echo "❌ Error: .env file not found! Please create one with GROQ_API_KEY and DOCKER_HUB credentials."
   exit 1
 fi
 
-# Export variables from .env (including DOCKER_USERNAME/PASSWORD/EMAIL)
+# Export variables from .env
 export $(grep -v '^#' .env | xargs)
 echo "✅ Environment variables loaded from .env"
 
@@ -34,51 +56,69 @@ if [ -z "$GROQ_API_KEY" ]; then
 fi
 
 # ------------------------------------------------------------------------------
-# STEP 2: Create or Update Docker Hub Image Pull Secret
+# STEP 2: Create or Update Docker Hub Image Pull Secret (Unchanged)
 # ------------------------------------------------------------------------------
+echo ""
+echo "--- STEP 2: Create or Update Docker Hub Secret ---"
 echo "🔑 Creating or updating Kubernetes Docker Hub Secret..."
 
-# Create the secret using the PAT in DOCKER_PASSWORD. 
-# We use --dry-run and pipe to kubectl apply to ensure it's created or updated safely.
+# Create the secret. If kubectl fails, print the error and exit.
 kubectl create secret docker-registry docker-hub-secret \
   --docker-server=https://index.docker.io/v1/ \
   --docker-username=$DOCKER_USERNAME \
   --docker-password=$DOCKER_PASSWORD \
   --docker-email=$DOCKER_EMAIL \
-  --dry-run=client -o yaml | kubectl apply -f -
+  --dry-run=client -o yaml | kubectl apply -f - \
+  || { echo "❌ **FAILURE in STEP 2:** Failed to create/update Kubernetes Docker Hub Secret. Check your **kubectl context** and **DOCKER_HUB credentials**."; exit 1; }
 
 echo "✅ Docker Hub Secret 'docker-hub-secret' created/updated."
 
 # ------------------------------------------------------------------------------
-# STEP 3: Determine UNIQUE Image Tags (Short SHAs) for Submodules
+# STEP 3: Determine UNIQUE Image Tags (Short SHAs) for Submodules (MODIFIED)
 # ------------------------------------------------------------------------------
+echo ""
+echo "--- STEP 3: Determine Image Tags (SHAs) ---"
 echo "Determining unique image tags (Short SHAs) for submodules..."
 
-# Get the unique SHA for the frontend-service
-cd frontend-service
-export FRONTEND_TAG=$(git rev-parse --short HEAD)
+# Get the unique SHA for the frontend-service-search (NEW NAME)
+cd frontend-service-search \
+  || { echo "❌ **FAILURE in STEP 3 (Frontend):** Cannot change directory into **frontend-service-search**. Is the directory missing?"; exit 1; }
+export FRONTEND_TAG=$(git rev-parse --short HEAD) \
+  || { echo "❌ **FAILURE in STEP 3 (Frontend):** Failed to get Git SHA. Are you inside a Git repository (or is **frontend-service-search** a valid Git submodule)?"; exit 1; }
 cd ..
 
-# Get the unique SHA for the textgen-service
-cd textgen-service
-export TEXTGEN_TAG=$(git rev-parse --short HEAD)
+# Get the unique SHA for the textgen-service-rag (NEW NAME)
+cd textgen-service-rag \
+  || { echo "❌ **FAILURE in STEP 3 (TextGen):** Cannot change directory into **textgen-service-rag**. Is the directory missing?"; exit 1; }
+export TEXTGEN_TAG=$(git rev-parse --short HEAD) \
+  || { echo "❌ **FAILURE in STEP 3 (TextGen):** Failed to get Git SHA. Are you inside a Git repository (or is **textgen-service-rag** a valid Git submodule)?"; exit 1; }
 cd ..
 
 echo "✅ Frontend image tag determined: $FRONTEND_TAG"
 echo "✅ TextGen image tag determined: $TEXTGEN_TAG"
 
 # ------------------------------------------------------------------------------
-# STEP 4: Substitute environment variables and apply Kubernetes manifests
+# STEP 4: Substitute environment variables and apply Kubernetes manifests (Unchanged)
 # ------------------------------------------------------------------------------
+echo ""
+echo "--- STEP 4: Apply Kubernetes Manifests ---"
 echo "⚙️ Substituting variables (API Key and Image Tags) and applying Kubernetes manifests..."
 
-# envsubst replaces $GROQ_API_KEY, $FRONTEND_TAG, and $TEXTGEN_TAG in the manifest
-envsubst < k8s-manifests/k8s-manifests.yaml | kubectl apply -f -
+# The k8s-manifests.yaml is assumed to be at the top level, as per the original script.
+# If the manifests were moved inside a service folder, this path would need updating.
+envsubst < k8s-manifests/k8s-manifests.yaml | kubectl apply -f - \
+  || { echo "❌ **FAILURE in STEP 4:** Failed to apply Kubernetes manifests. Check if **k8s-manifests/k8s-manifests.yaml** exists and your **kubectl context** is correct."; exit 1; }
 
 echo "✅ Kubernetes manifests applied successfully!"
 
 # ------------------------------------------------------------------------------
-# STEP 5: Verify deployment
+# STEP 5: Verify deployment (Unchanged)
 # ------------------------------------------------------------------------------
+echo ""
+echo "--- STEP 5: Verify Deployment Status ---"
 echo "⏳ Waiting for pods to start (this may take ~1 minute)..."
 kubectl get pods -w
+
+# ------------------------------------------------------------------------------
+echo "✅ Deployment script finished successfully!"
+echo "==========================================================="

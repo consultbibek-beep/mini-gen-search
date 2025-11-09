@@ -1,26 +1,34 @@
-# mini-gen/docker-compose.yml
+# mini-gen-search/docker-compose.yml (MODIFIED)
 version: "3.8"
 
 services:
-  frontend:
+  # UPDATED SERVICE NAME
+  frontend-search:
     build:
-      context: ./frontend-service
+      # UPDATED CONTEXT DIRECTORY
+      context: ./frontend-service-search
       dockerfile: Dockerfile
-    container_name: mini-gen-frontend
+    # UPDATED CONTAINER NAME
+    container_name: mini-gen-frontend-search
     ports:
       - "8080:5000"
     environment:
-      - TEXTGEN_HOST=http://textgen:5001
+      # UPDATED HOST REFERENCE
+      - TEXTGEN_HOST=http://textgen-rag:5001
     depends_on:
-      - textgen
+      # UPDATED DEPENDENCY NAME
+      - textgen-rag
     networks:
       - mini-net
 
-  textgen:
+  # UPDATED SERVICE NAME
+  textgen-rag:
     build:
-      context: ./textgen-service
+      # UPDATED CONTEXT DIRECTORY
+      context: ./textgen-service-rag
       dockerfile: Dockerfile
-    container_name: mini-gen-textgen
+    # UPDATED CONTAINER NAME
+    container_name: mini-gen-textgen-rag
     env_file:
       - .env
     expose:
@@ -31,5 +39,3 @@ services:
 networks:
   mini-net:
     driver: bridge
-
-

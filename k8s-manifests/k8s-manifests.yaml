@@ -1,43 +1,41 @@
-# mini-gen/k8s-manifests/k8s-manifests.yaml
-# This manifest is FIXED to use dynamic tags and imagePullSecrets.
+# mini-gen-search/k8s-manifests.yaml
+# Manifest updated for the mini-gen-search project structure.
 
 ---
 
-# 1. ConfigMap for Environment Variables (API Key)
+# 1. ConfigMap for Environment Variables (API Key) - RENAMED METADATA
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: textgen-config
+  name: textgen-service-rag-config
 data:
   GROQ_API_KEY: $GROQ_API_KEY
 
 ---
 
-# 2. TextGen (Backend) Deployment
+# 2. TextGen (Backend) Deployment - RENAMED METADATA, LABELS, SELECTOR, and IMAGE
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: textgen-deployment
+  name: textgen-deployment-rag
   labels:
-    app: textgen
+    app: textgen-rag
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: textgen
+      app: textgen-rag
   template:
     metadata:
       labels:
-        app: textgen
+        app: textgen-rag
     spec:
-      # FIX 1: ADD IMAGE PULL SECRET
       imagePullSecrets:
         - name: docker-hub-secret
       containers:
         - name: textgen-api
-          # FIX 2: USE DYNAMIC TAG VARIABLE
-          image: consultbibek/mini-gen-textgen:$TEXTGEN_TAG
-          # FIX 3: USE ALWAYS TO FORCE PULL
+          # UPDATED IMAGE NAME: textgen-service-rag
+          image: consultbibek/textgen-service-rag:$TEXTGEN_TAG
           imagePullPolicy: Always
           ports:
             - containerPort: 5001
@@ -45,22 +43,23 @@ spec:
             - name: GROQ_API_KEY
               valueFrom:
                 configMapKeyRef:
-                  name: textgen-config
+                  # UPDATED CONFIGMAP NAME
+                  name: textgen-service-rag-config
                   key: GROQ_API_KEY
 
 ---
 
-# 3. TextGen (Backend) Service
+# 3. TextGen (Backend) Service - RENAMED METADATA and SELECTOR
 apiVersion: v1
 kind: Service
 metadata:
-  name: textgen
+  name: textgen-service-rag
   labels:
-    app: textgen
+    app: textgen-rag
 spec:
   type: ClusterIP
   selector:
-    app: textgen
+    app: textgen-rag
   ports:
     - protocol: TCP
       port: 5001
@@ -68,51 +67,50 @@ spec:
 
 ---
 
-# 4. Frontend Deployment
+# 4. Frontend Deployment - RENAMED METADATA, LABELS, SELECTOR, and IMAGE
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-deployment
+  name: frontend-deployment-search
   labels:
-    app: frontend
+    app: frontend-search
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: frontend
+      app: frontend-search
   template:
     metadata:
       labels:
-        app: frontend
+        app: frontend-search
     spec:
-      # FIX 1: ADD IMAGE PULL SECRET
       imagePullSecrets:
         - name: docker-hub-secret
       containers:
         - name: frontend-web
-          # FIX 2: USE DYNAMIC TAG VARIABLE
-          image: consultbibek/mini-gen-frontend:$FRONTEND_TAG
-          # FIX 3: USE ALWAYS TO FORCE PULL
+          # UPDATED IMAGE NAME: frontend-service-search
+          image: consultbibek/frontend-service-search:$FRONTEND_TAG
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
           env:
             - name: TEXTGEN_HOST
-              value: "http://textgen:5001"
+              # UPDATED BACKEND SERVICE NAME
+              value: "http://textgen-service-rag:5001"
 
 ---
 
-# 5. Frontend (Web UI) Service
+# 5. Frontend (Web UI) Service - RENAMED METADATA and SELECTOR
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-service
+  name: frontend-service-search
   labels:
-    app: frontend
+    app: frontend-search
 spec:
   type: NodePort
   selector:
-    app: frontend
+    app: frontend-search
   ports:
     - protocol: TCP
       port: 80
