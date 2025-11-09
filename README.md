@@ -121,28 +121,40 @@ git init
 # The service folders are now ignored!
 git add .
 git commit -m "Initialized parent structure; ignoring service directories for submodule re-addition."
+git branch -M main
+git remote add origin https://github.com/consultbibek-beep/mini-gen-search.git
+git push -u origin main
 
-# OPTIONAL: Set up a remote for the parent project (Correct)
-# ...
+Remove "frontend-service-search/" from .gitignore
+Remove "textgen-service-rag/" from .gitignore
 
+# 1. Add the new frontend service as a submodule.
+# NOTE: This command creates a new entry in .gitmodules and *clones* the repository.
+git submodule add https://github.com/consultbibek-beep/frontend-service-search.git frontend-service-search
 
+# 2. Add the new textgen service as a submodule.
+git submodule add https://github.com/consultbibek-beep/textgen-service-rag.git textgen-service-rag
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+# 3. Commit the final .gitmodules changes and push to the new main repo.
+git commit -m "Add frontend-service-search and textgen-service-rag as submodules with new URLs."
+git push
 
 
---------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ################################
 
 https://github.com/consultbibek-beep/mini-gen.git
     https://github.com/consultbibek-beep/frontend-service.git

@@ -25,5 +25,5 @@ __pycache__/
 # macOS system files
 .DS_Store
 
-frontend-service-search/
-textgen-service-rag/
+#frontend-service-search/
+#textgen-service-rag/
