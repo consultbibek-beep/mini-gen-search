@@ -272,3 +272,255 @@ textgen-deployment-rag-9bf57db77-kwsxw        0/1     Error               0     
 textgen-deployment-rag-9bf57db77-kwsxw        0/1     Error               0          3m32s
 frontend-deployment-search-668b9dc945-xrjss   0/1     Error               0          3m32s
 frontend-deployment-search-668b9dc945-xrjss   0/1     Error               0          3m32s
+===========================================================
+🪵 Starting Deployment Logging
+Log file: log/deploy_instr.log
+Timestamp: 2025-11-09 02:30:42
+===========================================================
+-----------------------------------------------------------
+🚀 Starting Kubernetes deployment for mini-gen-search
+-----------------------------------------------------------
+--- STEP 1: Archive Application Files ---
+✅ Application files archived to **z_duplicates**.
+--- STEP 2: Load Environment Variables ---
+✅ Environment variables loaded from .env
+
+--- STEP 3: Create or Update Docker Hub Secret ---
+🔑 Creating or updating Kubernetes Docker Hub Secret...
+secret/docker-hub-secret created
+✅ Docker Hub Secret 'docker-hub-secret' created/updated.
+
+--- STEP 4: Determine Image Tags (SHAs) ---
+Determining unique image tags (Short SHAs) for submodules...
+✅ Frontend image tag determined: 3999034
+✅ TextGen image tag determined: fc99a05
+
+--- STEP 5: Apply Kubernetes Manifests ---
+⚙️ Substituting variables (API Key and Image Tags) and applying Kubernetes manifests...
+configmap/textgen-service-rag-config created
+deployment.apps/textgen-deployment-rag created
+service/textgen-service-rag created
+deployment.apps/frontend-deployment-search created
+service/frontend-service-search created
+✅ Kubernetes manifests applied successfully!
+
+--- STEP 6: Verify Deployment Status ---
+⏳ Waiting for pods to start (this may take ~1 minute)...
+NAME                                          READY   STATUS              RESTARTS   AGE
+frontend-deployment-search-668b9dc945-jk6f9   0/1     ContainerCreating   0          1s
+textgen-deployment-rag-9bf57db77-g4gxg        0/1     ContainerCreating   0          1s
+textgen-deployment-rag-9bf57db77-g4gxg        1/1     Running             0          3s
+frontend-deployment-search-668b9dc945-jk6f9   1/1     Running             0          3s
+textgen-deployment-rag-9bf57db77-g4gxg        1/1     Terminating         0          27s
+frontend-deployment-search-668b9dc945-jk6f9   1/1     Terminating         0          27s
+textgen-deployment-rag-9bf57db77-g4gxg        1/1     Terminating         0          27s
+frontend-deployment-search-668b9dc945-jk6f9   1/1     Terminating         0          27s
+frontend-deployment-search-668b9dc945-jk6f9   0/1     Error               0          57s
+textgen-deployment-rag-9bf57db77-g4gxg        0/1     Error               0          57s
+textgen-deployment-rag-9bf57db77-g4gxg        0/1     Error               0          58s
+textgen-deployment-rag-9bf57db77-g4gxg        0/1     Error               0          58s
+frontend-deployment-search-668b9dc945-jk6f9   0/1     Error               0          58s
+frontend-deployment-search-668b9dc945-jk6f9   0/1     Error               0          58s
+===========================================================
+🪵 Starting Deployment Logging
+Log file: log/deploy_instr.log
+Timestamp: 2025-11-09 02:33:03
+===========================================================
+-----------------------------------------------------------
+🚀 Starting Kubernetes deployment for mini-gen-search
+-----------------------------------------------------------
+--- STEP 1: Archive Application Files ---
+✅ Application files archived to **z_duplicates**.
+--- STEP 2: Load Environment Variables ---
+✅ Environment variables loaded from .env
+
+--- STEP 3: Create or Update Docker Hub Secret ---
+🔑 Creating or updating Kubernetes Docker Hub Secret...
+secret/docker-hub-secret created
+✅ Docker Hub Secret 'docker-hub-secret' created/updated.
+
+--- STEP 4: Determine Image Tags (SHAs) ---
+Determining unique image tags (Short SHAs) for submodules...
+✅ Frontend image tag determined: 3999034
+✅ TextGen image tag determined: fc99a05
+
+--- STEP 5: Apply Kubernetes Manifests ---
+⚙️ Substituting variables (API Key and Image Tags) and applying Kubernetes manifests...
+configmap/textgen-service-rag-config created
+deployment.apps/textgen-deployment-rag created
+service/textgen-service-rag created
+deployment.apps/frontend-deployment-search created
+service/frontend-service-search created
+✅ Kubernetes manifests applied successfully!
+
+--- STEP 6: Verify Deployment Status ---
+⏳ Waiting for pods to start (this may take ~1 minute)...
+NAME                                          READY   STATUS              RESTARTS   AGE
+frontend-deployment-search-668b9dc945-72cxt   0/1     ContainerCreating   0          0s
+textgen-deployment-rag-9bf57db77-cnp52        0/1     ContainerCreating   0          0s
+frontend-deployment-search-668b9dc945-72cxt   1/1     Running             0          3s
+textgen-deployment-rag-9bf57db77-cnp52        1/1     Running             0          3s
+textgen-deployment-rag-9bf57db77-cnp52        1/1     Terminating         0          42s
+frontend-deployment-search-668b9dc945-72cxt   1/1     Terminating         0          42s
+textgen-deployment-rag-9bf57db77-cnp52        0/1     Error               0          72s
+frontend-deployment-search-668b9dc945-72cxt   0/1     Error               0          72s
+frontend-deployment-search-668b9dc945-72cxt   0/1     Error               0          73s
+frontend-deployment-search-668b9dc945-72cxt   0/1     Error               0          73s
+textgen-deployment-rag-9bf57db77-cnp52        0/1     Error               0          73s
+textgen-deployment-rag-9bf57db77-cnp52        0/1     Error               0          73s
+===========================================================
+🪵 Starting Deployment Logging
+Log file: log/deploy_instr.log
+Timestamp: 2025-11-09 02:39:32
+===========================================================
+-----------------------------------------------------------
+🚀 Starting Kubernetes deployment for mini-gen-search
+-----------------------------------------------------------
+--- STEP 1: Archive Application Files ---
+✅ Application files archived to **z_duplicates**.
+--- STEP 2: Load Environment Variables ---
+✅ Environment variables loaded from .env
+
+--- STEP 3: Create or Update Docker Hub Secret ---
+🔑 Creating or updating Kubernetes Docker Hub Secret...
+secret/docker-hub-secret created
+✅ Docker Hub Secret 'docker-hub-secret' created/updated.
+
+--- STEP 4: Determine Image Tags (SHAs) ---
+Determining unique image tags (Short SHAs) for submodules...
+✅ Frontend image tag determined: 3999034
+✅ TextGen image tag determined: fc99a05
+
+--- STEP 5: Apply Kubernetes Manifests ---
+⚙️ Substituting variables (API Key and Image Tags) and applying Kubernetes manifests...
+configmap/textgen-service-rag-config created
+deployment.apps/textgen-deployment-rag created
+service/textgen-service-rag created
+deployment.apps/frontend-deployment-search created
+service/frontend-service-search created
+✅ Kubernetes manifests applied successfully!
+
+--- STEP 6: Verify Deployment Status ---
+⏳ Waiting for pods to start (this may take ~1 minute)...
+NAME                                          READY   STATUS              RESTARTS   AGE
+frontend-deployment-search-668b9dc945-l445x   0/1     ContainerCreating   0          0s
+textgen-deployment-rag-9bf57db77-cmqvd        0/1     ContainerCreating   0          0s
+textgen-deployment-rag-9bf57db77-cmqvd        1/1     Running             0          2s
+frontend-deployment-search-668b9dc945-l445x   1/1     Running             0          3s
+textgen-deployment-rag-9bf57db77-cmqvd        1/1     Terminating         0          18s
+frontend-deployment-search-668b9dc945-l445x   1/1     Terminating         0          18s
+textgen-deployment-rag-9bf57db77-cmqvd        0/1     Error               0          48s
+frontend-deployment-search-668b9dc945-l445x   0/1     Error               0          48s
+textgen-deployment-rag-9bf57db77-cmqvd        0/1     Error               0          48s
+textgen-deployment-rag-9bf57db77-cmqvd        0/1     Error               0          48s
+frontend-deployment-search-668b9dc945-l445x   0/1     Error               0          48s
+frontend-deployment-search-668b9dc945-l445x   0/1     Error               0          48s
+===========================================================
+🪵 Starting Deployment Logging
+Log file: log/deploy_instr.log
+Timestamp: 2025-11-09 03:04:40
+===========================================================
+-----------------------------------------------------------
+🚀 Starting Kubernetes deployment for mini-gen-search
+-----------------------------------------------------------
+--- STEP 1: Archive Application Files ---
+✅ Application files archived to **z_duplicates**.
+--- STEP 2: Load Environment Variables ---
+✅ Environment variables loaded from .env
+
+--- STEP 3: Create or Update Docker Hub Secret ---
+🔑 Creating or updating Kubernetes Docker Hub Secret...
+secret/docker-hub-secret created
+✅ Docker Hub Secret 'docker-hub-secret' created/updated.
+
+--- STEP 4: Determine Image Tags (SHAs) ---
+Determining unique image tags (Short SHAs) for submodules...
+✅ Frontend image tag determined: 3999034
+✅ TextGen image tag determined: fc99a05
+
+--- STEP 5: Apply Kubernetes Manifests ---
+⚙️ Substituting variables (API Key and Image Tags) and applying Kubernetes manifests...
+persistentvolumeclaim/qdrant-pvc created
+service/qdrant-service created
+deployment.apps/qdrant-deployment created
+configmap/textgen-service-rag-config created
+deployment.apps/textgen-deployment-rag created
+service/textgen-service-rag created
+deployment.apps/frontend-deployment-search created
+service/frontend-service-search created
+✅ Kubernetes manifests applied successfully!
+
+--- STEP 6: Verify Deployment Status ---
+⏳ Waiting for pods to start (this may take ~1 minute)...
+NAME                                          READY   STATUS              RESTARTS   AGE
+frontend-deployment-search-668b9dc945-vk5jk   0/1     ContainerCreating   0          0s
+qdrant-deployment-7f6b7b5f5f-9kfv7            0/1     Pending             0          0s
+textgen-deployment-rag-798567f986-x2bfc       0/1     ContainerCreating   0          0s
+textgen-deployment-rag-798567f986-x2bfc       1/1     Running             0          2s
+textgen-deployment-rag-798567f986-x2bfc       1/1     Running             0          3s
+frontend-deployment-search-668b9dc945-vk5jk   1/1     Running             0          3s
+qdrant-deployment-7f6b7b5f5f-9kfv7            0/1     Pending             0          4s
+qdrant-deployment-7f6b7b5f5f-9kfv7            0/1     ContainerCreating   0          4s
+qdrant-deployment-7f6b7b5f5f-9kfv7            1/1     Running             0          8s
+textgen-deployment-rag-798567f986-x2bfc       1/1     Running             0          79s
+frontend-deployment-search-668b9dc945-vk5jk   1/1     Running             0          93s
+frontend-deployment-search-668b9dc945-vk5jk   1/1     Running             0          2m38s
+textgen-deployment-rag-798567f986-x2bfc       1/1     Terminating         0          3m37s
+textgen-deployment-rag-798567f986-x2bfc       1/1     Terminating         0          3m37s
+frontend-deployment-search-668b9dc945-vk5jk   1/1     Terminating         0          3m37s
+frontend-deployment-search-668b9dc945-vk5jk   0/1     Error               0          4m7s
+textgen-deployment-rag-798567f986-x2bfc       0/1     Error               0          4m7s
+textgen-deployment-rag-798567f986-x2bfc       0/1     Error               0          4m7s
+textgen-deployment-rag-798567f986-x2bfc       0/1     Error               0          4m7s
+frontend-deployment-search-668b9dc945-vk5jk   0/1     Error               0          4m7s
+frontend-deployment-search-668b9dc945-vk5jk   0/1     Error               0          4m7s
+qdrant-deployment-7f6b7b5f5f-9kfv7            1/1     Terminating         0          4m7s
+qdrant-deployment-7f6b7b5f5f-9kfv7            0/1     Error               0          4m8s
+qdrant-deployment-7f6b7b5f5f-9kfv7            0/1     Error               0          4m8s
+qdrant-deployment-7f6b7b5f5f-9kfv7            0/1     Error               0          4m8s
+===========================================================
+🪵 Starting Deployment Logging
+Log file: log/deploy_instr.log
+Timestamp: 2025-11-09 03:09:20
+===========================================================
+-----------------------------------------------------------
+🚀 Starting Kubernetes deployment for mini-gen-search
+-----------------------------------------------------------
+--- STEP 1: Archive Application Files ---
+✅ Application files archived to **z_duplicates**.
+--- STEP 2: Load Environment Variables ---
+✅ Environment variables loaded from .env
+
+--- STEP 3: Create or Update Docker Hub Secret ---
+🔑 Creating or updating Kubernetes Docker Hub Secret...
+secret/docker-hub-secret created
+✅ Docker Hub Secret 'docker-hub-secret' created/updated.
+
+--- STEP 4: Determine Image Tags (SHAs) ---
+Determining unique image tags (Short SHAs) for submodules...
+✅ Frontend image tag determined: 3999034
+✅ TextGen image tag determined: fc99a05
+
+--- STEP 5: Apply Kubernetes Manifests ---
+⚙️ Substituting variables (API Key and Image Tags) and applying Kubernetes manifests...
+persistentvolumeclaim/qdrant-pvc created
+service/qdrant-service created
+deployment.apps/qdrant-deployment created
+configmap/textgen-service-rag-config created
+deployment.apps/textgen-deployment-rag created
+service/textgen-service-rag created
+deployment.apps/frontend-deployment-search created
+service/frontend-service-search created
+✅ Kubernetes manifests applied successfully!
+
+--- STEP 6: Verify Deployment Status ---
+⏳ Waiting for pods to start (this may take ~1 minute)...
+NAME                                          READY   STATUS              RESTARTS   AGE
+frontend-deployment-search-668b9dc945-t26rq   0/1     ContainerCreating   0          0s
+qdrant-deployment-7f6b7b5f5f-ch4b6            0/1     Pending             0          0s
+textgen-deployment-rag-798567f986-fjjn8       0/1     ContainerCreating   0          0s
+textgen-deployment-rag-798567f986-fjjn8       1/1     Running             0          3s
+frontend-deployment-search-668b9dc945-t26rq   1/1     Running             0          4s
+qdrant-deployment-7f6b7b5f5f-ch4b6            0/1     Pending             0          4s
+qdrant-deployment-7f6b7b5f5f-ch4b6            0/1     ContainerCreating   0          4s
+qdrant-deployment-7f6b7b5f5f-ch4b6            1/1     Running             0          7s

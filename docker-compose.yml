@@ -1,41 +1,57 @@
-# mini-gen-search/docker-compose.yml (MODIFIED)
+# mini-gen-search/docker-compose.yml (COMPLETE FOR RAG)
 version: "3.8"
 
 services:
   # UPDATED SERVICE NAME
   frontend-search:
     build:
-      # UPDATED CONTEXT DIRECTORY
       context: ./frontend-service-search
       dockerfile: Dockerfile
-    # UPDATED CONTAINER NAME
     container_name: mini-gen-frontend-search
     ports:
       - "8080:5000"
     environment:
-      # UPDATED HOST REFERENCE
       - TEXTGEN_HOST=http://textgen-rag:5001
     depends_on:
-      # UPDATED DEPENDENCY NAME
       - textgen-rag
     networks:
       - mini-net
 
-  # UPDATED SERVICE NAME
+  # UPDATED SERVICE NAME (TextGen with RAG)
   textgen-rag:
     build:
-      # UPDATED CONTEXT DIRECTORY
       context: ./textgen-service-rag
       dockerfile: Dockerfile
-    # UPDATED CONTAINER NAME
     container_name: mini-gen-textgen-rag
     env_file:
       - .env
     expose:
       - "5001"
+    environment:
+      - QDRANT_HOST=qdrant  # Links to the Qdrant service name
+      - QDRANT_PORT=6333
+    volumes:
+      # CRITICAL: Mount the PDF into the container where the RAG logic expects it
+      - ./138.pdf:/app/138.pdf
+    depends_on:
+      - qdrant # Ensure Qdrant starts before TextGen
+    networks:
+      - mini-net
+
+  # NEW: Qdrant Vector Database Service
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qdrant
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant_storage:/qdrant/storage
     networks:
       - mini-net
 
 networks:
   mini-net:
     driver: bridge
+
+volumes:
+  qdrant_storage: # Volume to persist the vector index

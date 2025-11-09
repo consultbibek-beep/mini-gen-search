@@ -1,9 +1,74 @@
 # mini-gen-search/k8s-manifests.yaml
-# Manifest updated for the mini-gen-search project structure.
+# Complete Manifest for Hybrid LLM/RAG Architecture
 
 ---
 
-# 1. ConfigMap for Environment Variables (API Key) - RENAMED METADATA
+# 1. Qdrant Persistent Volume Claim (PVC)
+# Defines storage for the vector index persistence.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: qdrant-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi # Adjust size as needed
+
+---
+
+# 2. Qdrant Service
+# Exposes Qdrant's port 6333 internally using a ClusterIP.
+apiVersion: v1
+kind: Service
+metadata:
+  name: qdrant-service
+  labels:
+    app: qdrant
+spec:
+  selector:
+    app: qdrant
+  ports:
+    - port: 6333
+      targetPort: 6333
+  type: ClusterIP
+
+---
+
+# 3. Qdrant Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qdrant-deployment
+  labels:
+    app: qdrant
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: qdrant
+  template:
+    metadata:
+      labels:
+        app: qdrant
+    spec:
+      containers:
+        - name: qdrant
+          image: qdrant/qdrant:latest # Use a stable tag
+          ports:
+            - containerPort: 6333
+          volumeMounts:
+            - name: qdrant-storage
+              mountPath: /qdrant/storage
+      volumes:
+        - name: qdrant-storage
+          persistentVolumeClaim:
+            claimName: qdrant-pvc
+
+---
+
+# 4. ConfigMap for Environment Variables (API Key)
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -13,7 +78,7 @@ data:
 
 ---
 
-# 2. TextGen (Backend) Deployment - RENAMED METADATA, LABELS, SELECTOR, and IMAGE
+# 5. TextGen (Backend) Deployment - RAG Enabled (textgen-deployment-rag)
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -34,7 +99,6 @@ spec:
         - name: docker-hub-secret
       containers:
         - name: textgen-api
-          # CRITICAL FIX: ADDED 'mini-gen-' prefix
           image: consultbibek/mini-gen-textgen-rag:$TEXTGEN_TAG
           imagePullPolicy: Always
           ports:
@@ -43,13 +107,27 @@ spec:
             - name: GROQ_API_KEY
               valueFrom:
                 configMapKeyRef:
-                  # UPDATED CONFIGMAP NAME
                   name: textgen-service-rag-config
                   key: GROQ_API_KEY
+            # NEW RAG CONFIGURATION
+            - name: QDRANT_HOST
+              value: "qdrant-service" # Internal K8s service name
+            - name: QDRANT_PORT
+              value: "6333"
+          # Volume mount for the PDF file
+          volumeMounts:
+            - name: pdf-storage-volume
+              mountPath: /app/138.pdf
+              subPath: 138.pdf # Assumes the volume contains the file 138.pdf
+      volumes:
+        # NOTE: This emptyDir is a placeholder. For persistent PDF injection 
+        # (if not bundled in the Docker image), use a ConfigMap or persistent volume.
+        - name: pdf-storage-volume
+          emptyDir: {}
 
 ---
 
-# 3. TextGen (Backend) Service - RENAMED METADATA and SELECTOR
+# 6. TextGen (Backend) Service
 apiVersion: v1
 kind: Service
 metadata:
@@ -67,7 +145,7 @@ spec:
 
 ---
 
-# 4. Frontend Deployment - RENAMED METADATA, LABELS, SELECTOR, and IMAGE
+# 7. Frontend Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -88,19 +166,17 @@ spec:
         - name: docker-hub-secret
       containers:
         - name: frontend-web
-          # CRITICAL FIX: ADDED 'mini-gen-' prefix
           image: consultbibek/mini-gen-frontend-search:$FRONTEND_TAG
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
           env:
             - name: TEXTGEN_HOST
-              # UPDATED BACKEND SERVICE NAME
               value: "http://textgen-service-rag:5001"
 
 ---
 
-# 5. Frontend (Web UI) Service - RENAMED METADATA and SELECTOR
+# 8. Frontend (Web UI) Service
 apiVersion: v1
 kind: Service
 metadata:
