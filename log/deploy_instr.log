@@ -102,3 +102,83 @@ textgen-deployment-564565fbbf-8hfzc           0/1     ImagePullBackOff    0     
 textgen-deployment-rag-57b7f4bb77-9glr5       0/1     ImagePullBackOff    0          15s
 frontend-deployment-5d5fdf9575-k8z5d          0/1     ImagePullBackOff    0          62m
 frontend-deployment-search-74f4978bdf-zgtww   0/1     ImagePullBackOff    0          16s
+===========================================================
+🪵 Starting Deployment Logging
+Log file: log/deploy_instr.log
+Timestamp: 2025-11-09 00:58:23
+===========================================================
+-----------------------------------------------------------
+🚀 Starting Kubernetes deployment for mini-gen-search
+-----------------------------------------------------------
+--- STEP 1: Load Environment Variables ---
+✅ Environment variables loaded from .env
+
+--- STEP 2: Create or Update Docker Hub Secret ---
+🔑 Creating or updating Kubernetes Docker Hub Secret...
+secret/docker-hub-secret unchanged
+✅ Docker Hub Secret 'docker-hub-secret' created/updated.
+
+--- STEP 3: Determine Image Tags (SHAs) ---
+Determining unique image tags (Short SHAs) for submodules...
+✅ Frontend image tag determined: b67d1e3
+✅ TextGen image tag determined: dcfff7b
+
+--- STEP 4: Apply Kubernetes Manifests ---
+⚙️ Substituting variables (API Key and Image Tags) and applying Kubernetes manifests...
+configmap/textgen-service-rag-config unchanged
+deployment.apps/textgen-deployment-rag unchanged
+service/textgen-service-rag unchanged
+deployment.apps/frontend-deployment-search unchanged
+service/frontend-service-search unchanged
+✅ Kubernetes manifests applied successfully!
+
+--- STEP 5: Verify Deployment Status ---
+⏳ Waiting for pods to start (this may take ~1 minute)...
+NAME                                          READY   STATUS             RESTARTS   AGE
+frontend-deployment-5d5fdf9575-k8z5d          0/1     ImagePullBackOff   0          64m
+frontend-deployment-search-74f4978bdf-zgtww   0/1     ImagePullBackOff   0          99s
+textgen-deployment-564565fbbf-8hfzc           0/1     ImagePullBackOff   0          64m
+textgen-deployment-rag-57b7f4bb77-9glr5       0/1     ImagePullBackOff   0          99s
+textgen-deployment-rag-57b7f4bb77-9glr5       0/1     ErrImagePull       0          111s
+frontend-deployment-search-74f4978bdf-zgtww   0/1     ErrImagePull       0          115s
+textgen-deployment-rag-57b7f4bb77-9glr5       0/1     ImagePullBackOff   0          2m2s
+frontend-deployment-search-74f4978bdf-zgtww   0/1     ImagePullBackOff   0          2m9s
+===========================================================
+🪵 Starting Deployment Logging
+Log file: log/deploy_instr.log
+Timestamp: 2025-11-09 01:00:41
+===========================================================
+-----------------------------------------------------------
+🚀 Starting Kubernetes deployment for mini-gen-search
+-----------------------------------------------------------
+--- STEP 1: Load Environment Variables ---
+✅ Environment variables loaded from .env
+
+--- STEP 2: Create or Update Docker Hub Secret ---
+🔑 Creating or updating Kubernetes Docker Hub Secret...
+secret/docker-hub-secret created
+✅ Docker Hub Secret 'docker-hub-secret' created/updated.
+
+--- STEP 3: Determine Image Tags (SHAs) ---
+Determining unique image tags (Short SHAs) for submodules...
+✅ Frontend image tag determined: b67d1e3
+✅ TextGen image tag determined: dcfff7b
+
+--- STEP 4: Apply Kubernetes Manifests ---
+⚙️ Substituting variables (API Key and Image Tags) and applying Kubernetes manifests...
+configmap/textgen-service-rag-config created
+deployment.apps/textgen-deployment-rag created
+service/textgen-service-rag created
+deployment.apps/frontend-deployment-search created
+service/frontend-service-search created
+✅ Kubernetes manifests applied successfully!
+
+--- STEP 5: Verify Deployment Status ---
+⏳ Waiting for pods to start (this may take ~1 minute)...
+NAME                                          READY   STATUS              RESTARTS   AGE
+frontend-deployment-search-74f4978bdf-dh82d   0/1     ContainerCreating   0          0s
+textgen-deployment-rag-57b7f4bb77-qqq9t       0/1     ContainerCreating   0          0s
+frontend-deployment-search-74f4978bdf-dh82d   0/1     ErrImagePull        0          3s
+textgen-deployment-rag-57b7f4bb77-qqq9t       0/1     ErrImagePull        0          4s
+frontend-deployment-search-74f4978bdf-dh82d   0/1     ImagePullBackOff    0          15s
+textgen-deployment-rag-57b7f4bb77-qqq9t       0/1     ImagePullBackOff    0          18s
