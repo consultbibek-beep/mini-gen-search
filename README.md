@@ -2,7 +2,7 @@
 
 To Start:
 bibeks-MacBook-Air:~/workspace/mini-gen$ . ./deploy_instructions.sh
-bibeks-MacBook-Air:~/workspace/mini-gen$ kubectl port-forward service/frontend-service 8080:80
+bibeks-MacBook-Air:~/workspace/mini-gen$ kubectl port-forward service/frontend-service-search 8080:80
 
 To Stop:
 bibeks-MacBook-Air:~/workspace/mini-gen$ . ./deploy_instructions_stop.sh

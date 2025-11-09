@@ -27,3 +27,6 @@ __pycache__/
 
 #frontend-service-search/
 #textgen-service-rag/
+
+log/
+z_duplicates/

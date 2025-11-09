@@ -34,8 +34,8 @@ spec:
         - name: docker-hub-secret
       containers:
         - name: textgen-api
-          # UPDATED IMAGE NAME: textgen-service-rag
-          image: consultbibek/textgen-service-rag:$TEXTGEN_TAG
+          # CRITICAL FIX: ADDED 'mini-gen-' prefix
+          image: consultbibek/mini-gen-textgen-rag:$TEXTGEN_TAG
           imagePullPolicy: Always
           ports:
             - containerPort: 5001
@@ -88,8 +88,8 @@ spec:
         - name: docker-hub-secret
       containers:
         - name: frontend-web
-          # UPDATED IMAGE NAME: frontend-service-search
-          image: consultbibek/frontend-service-search:$FRONTEND_TAG
+          # CRITICAL FIX: ADDED 'mini-gen-' prefix
+          image: consultbibek/mini-gen-frontend-search:$FRONTEND_TAG
           imagePullPolicy: Always
           ports:
             - containerPort: 5000

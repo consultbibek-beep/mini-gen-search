@@ -182,3 +182,93 @@ frontend-deployment-search-74f4978bdf-dh82d   0/1     ErrImagePull        0     
 textgen-deployment-rag-57b7f4bb77-qqq9t       0/1     ErrImagePull        0          4s
 frontend-deployment-search-74f4978bdf-dh82d   0/1     ImagePullBackOff    0          15s
 textgen-deployment-rag-57b7f4bb77-qqq9t       0/1     ImagePullBackOff    0          18s
+===========================================================
+🪵 Starting Deployment Logging
+Log file: log/deploy_instr.log
+Timestamp: 2025-11-09 01:46:19
+===========================================================
+-----------------------------------------------------------
+🚀 Starting Kubernetes deployment for mini-gen-search
+-----------------------------------------------------------
+--- STEP 1: Load Environment Variables ---
+✅ Environment variables loaded from .env
+
+--- STEP 2: Create or Update Docker Hub Secret ---
+🔑 Creating or updating Kubernetes Docker Hub Secret...
+secret/docker-hub-secret created
+✅ Docker Hub Secret 'docker-hub-secret' created/updated.
+
+--- STEP 3: Determine Image Tags (SHAs) ---
+Determining unique image tags (Short SHAs) for submodules...
+✅ Frontend image tag determined: 3999034
+✅ TextGen image tag determined: fc99a05
+
+--- STEP 4: Apply Kubernetes Manifests ---
+⚙️ Substituting variables (API Key and Image Tags) and applying Kubernetes manifests...
+configmap/textgen-service-rag-config created
+deployment.apps/textgen-deployment-rag created
+service/textgen-service-rag created
+deployment.apps/frontend-deployment-search created
+service/frontend-service-search created
+✅ Kubernetes manifests applied successfully!
+
+--- STEP 5: Verify Deployment Status ---
+⏳ Waiting for pods to start (this may take ~1 minute)...
+NAME                                          READY   STATUS              RESTARTS   AGE
+frontend-deployment-search-674c745cd6-s4lnt   0/1     ContainerCreating   0          0s
+textgen-deployment-rag-6ff4ddf6d6-qdqjl       0/1     ContainerCreating   0          0s
+textgen-deployment-rag-6ff4ddf6d6-qdqjl       0/1     ErrImagePull        0          3s
+frontend-deployment-search-674c745cd6-s4lnt   0/1     ErrImagePull        0          4s
+textgen-deployment-rag-6ff4ddf6d6-qdqjl       0/1     ImagePullBackOff    0          16s
+frontend-deployment-search-674c745cd6-s4lnt   0/1     ImagePullBackOff    0          16s
+frontend-deployment-search-674c745cd6-s4lnt   0/1     ErrImagePull        0          28s
+textgen-deployment-rag-6ff4ddf6d6-qdqjl       0/1     ErrImagePull        0          30s
+textgen-deployment-rag-6ff4ddf6d6-qdqjl       0/1     ImagePullBackOff    0          41s
+frontend-deployment-search-674c745cd6-s4lnt   0/1     ImagePullBackOff    0          43s
+===========================================================
+🪵 Starting Deployment Logging
+Log file: log/deploy_instr.log
+Timestamp: 2025-11-09 01:59:27
+===========================================================
+-----------------------------------------------------------
+🚀 Starting Kubernetes deployment for mini-gen-search
+-----------------------------------------------------------
+--- STEP 1: Load Environment Variables ---
+✅ Environment variables loaded from .env
+
+--- STEP 2: Create or Update Docker Hub Secret ---
+🔑 Creating or updating Kubernetes Docker Hub Secret...
+secret/docker-hub-secret created
+✅ Docker Hub Secret 'docker-hub-secret' created/updated.
+
+--- STEP 3: Determine Image Tags (SHAs) ---
+Determining unique image tags (Short SHAs) for submodules...
+✅ Frontend image tag determined: 3999034
+✅ TextGen image tag determined: fc99a05
+
+--- STEP 4: Apply Kubernetes Manifests ---
+⚙️ Substituting variables (API Key and Image Tags) and applying Kubernetes manifests...
+configmap/textgen-service-rag-config created
+deployment.apps/textgen-deployment-rag created
+service/textgen-service-rag created
+deployment.apps/frontend-deployment-search created
+service/frontend-service-search created
+✅ Kubernetes manifests applied successfully!
+
+--- STEP 5: Verify Deployment Status ---
+⏳ Waiting for pods to start (this may take ~1 minute)...
+NAME                                          READY   STATUS              RESTARTS   AGE
+frontend-deployment-search-668b9dc945-xrjss   0/1     ContainerCreating   0          1s
+textgen-deployment-rag-9bf57db77-kwsxw        0/1     ContainerCreating   0          1s
+textgen-deployment-rag-9bf57db77-kwsxw        1/1     Running             0          6s
+frontend-deployment-search-668b9dc945-xrjss   1/1     Running             0          9s
+frontend-deployment-search-668b9dc945-xrjss   1/1     Running             0          81s
+textgen-deployment-rag-9bf57db77-kwsxw        1/1     Running             0          85s
+textgen-deployment-rag-9bf57db77-kwsxw        1/1     Terminating         0          3m2s
+frontend-deployment-search-668b9dc945-xrjss   1/1     Terminating         0          3m2s
+frontend-deployment-search-668b9dc945-xrjss   0/1     Error               0          3m32s
+textgen-deployment-rag-9bf57db77-kwsxw        0/1     Error               0          3m32s
+textgen-deployment-rag-9bf57db77-kwsxw        0/1     Error               0          3m32s
+textgen-deployment-rag-9bf57db77-kwsxw        0/1     Error               0          3m32s
+frontend-deployment-search-668b9dc945-xrjss   0/1     Error               0          3m32s
+frontend-deployment-search-668b9dc945-xrjss   0/1     Error               0          3m32s
