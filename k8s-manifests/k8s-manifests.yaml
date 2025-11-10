@@ -105,14 +105,8 @@ metadata:
               value: "qdrant-service"
             - name: QDRANT_PORT
               value: "6333"
-          # Volume mount for the PDF file - REMOVE THIS SECTION
-          # volumeMounts:
-          #   - name: pdf-storage-volume
-          #     mountPath: /app/138.pdf
-          #     subPath: 138.pdf
-      # volumes: # REMOVE THIS SECTION
-      #   - name: pdf-storage-volume
-      #     emptyDir: {}
+          # Volume mounts for the PDF file (REMOVED)
+      # volumes: (REMOVED)
 
 ---
 
