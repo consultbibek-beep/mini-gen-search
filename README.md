@@ -2,13 +2,17 @@
 
 To Start:
 bibeks-MacBook-Air:~/workspace/mini-gen$ . ./deploy_instructions.sh
-bibeks-MacBook-Air:~/workspace/mini-gen$ kubectl port-forward service/frontend-service-search 8080:80
+bibeks-MacBook-Air:~/workspace/mini-gen$ 
+kubectl port-forward service/frontend-service-search 8080:80
 
 To Stop:
 bibeks-MacBook-Air:~/workspace/mini-gen$ . ./deploy_instructions_stop.sh
 
 url:
 http://localhost:8080/
+
+# git Commits Direct Command
+git add . && git commit -m "k8s update for pdf" && git push origin main
 
 
 # The goal is to migrate:

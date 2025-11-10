@@ -82,18 +82,10 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: textgen-deployment-rag
-  labels:
-    app: textgen-rag
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: textgen-rag
+# ... (rest of metadata/spec)
   template:
     metadata:
-      labels:
-        app: textgen-rag
+# ...
     spec:
       imagePullSecrets:
         - name: docker-hub-secret
@@ -109,21 +101,18 @@ spec:
                 configMapKeyRef:
                   name: textgen-service-rag-config
                   key: GROQ_API_KEY
-            # NEW RAG CONFIGURATION
             - name: QDRANT_HOST
-              value: "qdrant-service" # Internal K8s service name
+              value: "qdrant-service"
             - name: QDRANT_PORT
               value: "6333"
-          # Volume mount for the PDF file
-          volumeMounts:
-            - name: pdf-storage-volume
-              mountPath: /app/138.pdf
-              subPath: 138.pdf # Assumes the volume contains the file 138.pdf
-      volumes:
-        # NOTE: This emptyDir is a placeholder. For persistent PDF injection 
-        # (if not bundled in the Docker image), use a ConfigMap or persistent volume.
-        - name: pdf-storage-volume
-          emptyDir: {}
+          # Volume mount for the PDF file - REMOVE THIS SECTION
+          # volumeMounts:
+          #   - name: pdf-storage-volume
+          #     mountPath: /app/138.pdf
+          #     subPath: 138.pdf
+      # volumes: # REMOVE THIS SECTION
+      #   - name: pdf-storage-volume
+      #     emptyDir: {}
 
 ---
 

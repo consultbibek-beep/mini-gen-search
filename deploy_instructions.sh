@@ -33,7 +33,7 @@ echo "🚀 Starting Kubernetes deployment for mini-gen-search"
 echo "-----------------------------------------------------------"
 
 # ------------------------------------------------------------------------------
-# STEP 1: Archive Application Files (NEW STEP)
+# STEP 1: Archive Application Files (MODIFIED STEP)
 # ------------------------------------------------------------------------------
 echo "--- STEP 1: Archive Application Files ---"
 
@@ -41,6 +41,7 @@ DUPLICATES_DIR="z_duplicates"
 mkdir -p "$DUPLICATES_DIR" \
   || { echo "❌ **FAILURE in STEP 1:** Failed to create archive directory **$DUPLICATES_DIR**."; exit 1; }
 
+# Copy application files (.py)
 # Copy frontend-service-search/app.py to z_duplicates/app_frontend.py
 cp frontend-service-search/app.py "$DUPLICATES_DIR/app_frontend.py" \
   || { echo "❌ **FAILURE in STEP 1:** Failed to copy **frontend-service-search/app.py**."; exit 1; }
@@ -49,7 +50,16 @@ cp frontend-service-search/app.py "$DUPLICATES_DIR/app_frontend.py" \
 cp textgen-service-rag/app.py "$DUPLICATES_DIR/app_textgen.py" \
   || { echo "❌ **FAILURE in STEP 1:** Failed to copy **textgen-service-rag/app.py**."; exit 1; }
 
-echo "✅ Application files archived to **$DUPLICATES_DIR**."
+# Copy Dockerfiles (NEW ADDITION)
+# Copy frontend-service-search/Dockerfile to z_duplicates/Dockerfile_frontend
+cp frontend-service-search/Dockerfile "$DUPLICATES_DIR/Dockerfile_frontend" \
+  || { echo "❌ **FAILURE in STEP 1:** Failed to copy **frontend-service-search/Dockerfile**."; exit 1; }
+  
+# Copy textgen-service-rag/Dockerfile to z_duplicates/Dockerfile_textgen
+cp textgen-service-rag/Dockerfile "$DUPLICATES_DIR/Dockerfile_textgen" \
+  || { echo "❌ **FAILURE in STEP 1:** Failed to copy **textgen-service-rag/Dockerfile**."; exit 1; }
+
+echo "✅ Application files and Dockerfiles archived to **$DUPLICATES_DIR**."
 
 # ------------------------------------------------------------------------------
 # STEP 2: Load environment variables from .env file (Original Step 1, now Step 2)

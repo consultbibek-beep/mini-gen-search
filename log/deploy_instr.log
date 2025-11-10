@@ -524,3 +524,230 @@ frontend-deployment-search-668b9dc945-t26rq   1/1     Running             0     
 qdrant-deployment-7f6b7b5f5f-ch4b6            0/1     Pending             0          4s
 qdrant-deployment-7f6b7b5f5f-ch4b6            0/1     ContainerCreating   0          4s
 qdrant-deployment-7f6b7b5f5f-ch4b6            1/1     Running             0          7s
+===========================================================
+🪵 Starting Deployment Logging
+Log file: log/deploy_instr.log
+Timestamp: 2025-11-09 03:49:45
+===========================================================
+-----------------------------------------------------------
+🚀 Starting Kubernetes deployment for mini-gen-search
+-----------------------------------------------------------
+--- STEP 1: Archive Application Files ---
+✅ Application files archived to **z_duplicates**.
+--- STEP 2: Load Environment Variables ---
+✅ Environment variables loaded from .env
+
+--- STEP 3: Create or Update Docker Hub Secret ---
+🔑 Creating or updating Kubernetes Docker Hub Secret...
+secret/docker-hub-secret unchanged
+✅ Docker Hub Secret 'docker-hub-secret' created/updated.
+
+--- STEP 4: Determine Image Tags (SHAs) ---
+Determining unique image tags (Short SHAs) for submodules...
+✅ Frontend image tag determined: c1d6f3d
+✅ TextGen image tag determined: 5b31039
+
+--- STEP 5: Apply Kubernetes Manifests ---
+⚙️ Substituting variables (API Key and Image Tags) and applying Kubernetes manifests...
+persistentvolumeclaim/qdrant-pvc unchanged
+service/qdrant-service unchanged
+deployment.apps/qdrant-deployment unchanged
+configmap/textgen-service-rag-config unchanged
+deployment.apps/textgen-deployment-rag configured
+service/textgen-service-rag unchanged
+deployment.apps/frontend-deployment-search configured
+service/frontend-service-search unchanged
+✅ Kubernetes manifests applied successfully!
+
+--- STEP 6: Verify Deployment Status ---
+⏳ Waiting for pods to start (this may take ~1 minute)...
+NAME                                          READY   STATUS              RESTARTS   AGE
+frontend-deployment-search-6648cd6675-h5sr7   0/1     ContainerCreating   0          0s
+frontend-deployment-search-668b9dc945-t26rq   1/1     Running             0          40m
+qdrant-deployment-7f6b7b5f5f-ch4b6            1/1     Running             0          40m
+textgen-deployment-rag-798567f986-fjjn8       1/1     Running             0          40m
+textgen-deployment-rag-7cccd9944d-kbgjf       0/1     ContainerCreating   0          0s
+textgen-deployment-rag-7cccd9944d-kbgjf       0/1     RunContainerError   0          39s
+frontend-deployment-search-6648cd6675-h5sr7   1/1     Running             0          42s
+frontend-deployment-search-668b9dc945-t26rq   1/1     Terminating         0          41m
+textgen-deployment-rag-7cccd9944d-kbgjf       0/1     RunContainerError   1 (1s ago)   43s
+textgen-deployment-rag-7cccd9944d-kbgjf       0/1     CrashLoopBackOff    1 (2s ago)   44s
+textgen-deployment-rag-7cccd9944d-kbgjf       0/1     RunContainerError   2 (1s ago)   59s
+textgen-deployment-rag-7cccd9944d-kbgjf       0/1     CrashLoopBackOff    2 (13s ago)   71s
+frontend-deployment-search-668b9dc945-t26rq   0/1     Error               0             41m
+frontend-deployment-search-668b9dc945-t26rq   0/1     Error               0             41m
+frontend-deployment-search-668b9dc945-t26rq   0/1     Error               0             41m
+textgen-deployment-rag-7cccd9944d-kbgjf       0/1     RunContainerError   3 (1s ago)    87s
+textgen-deployment-rag-7cccd9944d-kbgjf       0/1     CrashLoopBackOff    3 (13s ago)   99s
+textgen-deployment-rag-7cccd9944d-kbgjf       0/1     CrashLoopBackOff    3 (24s ago)   110s
+textgen-deployment-rag-798567f986-fjjn8       1/1     Terminating         0             42m
+textgen-deployment-rag-7cccd9944d-kbgjf       0/1     Terminating         3 (36s ago)   2m2s
+textgen-deployment-rag-7cccd9944d-kbgjf       0/1     Terminating         3             2m2s
+frontend-deployment-search-6648cd6675-h5sr7   1/1     Terminating         0             2m2s
+textgen-deployment-rag-7cccd9944d-kbgjf       0/1     StartError          3             2m3s
+textgen-deployment-rag-7cccd9944d-kbgjf       0/1     StartError          3             2m3s
+textgen-deployment-rag-7cccd9944d-kbgjf       0/1     StartError          3             2m3s
+textgen-deployment-rag-798567f986-fjjn8       0/1     Error               0             42m
+frontend-deployment-search-6648cd6675-h5sr7   0/1     Error               0             2m33s
+textgen-deployment-rag-798567f986-fjjn8       0/1     Error               0             42m
+textgen-deployment-rag-798567f986-fjjn8       0/1     Error               0             42m
+frontend-deployment-search-6648cd6675-h5sr7   0/1     Error               0             2m33s
+frontend-deployment-search-6648cd6675-h5sr7   0/1     Error               0             2m33s
+qdrant-deployment-7f6b7b5f5f-ch4b6            1/1     Terminating         0             42m
+qdrant-deployment-7f6b7b5f5f-ch4b6            0/1     Error               0             43m
+qdrant-deployment-7f6b7b5f5f-ch4b6            0/1     Error               0             43m
+qdrant-deployment-7f6b7b5f5f-ch4b6            0/1     Error               0             43m
+===========================================================
+🪵 Starting Deployment Logging
+Log file: log/deploy_instr.log
+Timestamp: 2025-11-09 20:32:27
+===========================================================
+-----------------------------------------------------------
+🚀 Starting Kubernetes deployment for mini-gen-search
+-----------------------------------------------------------
+--- STEP 1: Archive Application Files ---
+✅ Application files archived to **z_duplicates**.
+--- STEP 2: Load Environment Variables ---
+✅ Environment variables loaded from .env
+
+--- STEP 3: Create or Update Docker Hub Secret ---
+🔑 Creating or updating Kubernetes Docker Hub Secret...
+secret/docker-hub-secret created
+✅ Docker Hub Secret 'docker-hub-secret' created/updated.
+
+--- STEP 4: Determine Image Tags (SHAs) ---
+Determining unique image tags (Short SHAs) for submodules...
+✅ Frontend image tag determined: c1d6f3d
+✅ TextGen image tag determined: 5b31039
+
+--- STEP 5: Apply Kubernetes Manifests ---
+⚙️ Substituting variables (API Key and Image Tags) and applying Kubernetes manifests...
+persistentvolumeclaim/qdrant-pvc created
+service/qdrant-service created
+deployment.apps/qdrant-deployment created
+configmap/textgen-service-rag-config created
+deployment.apps/textgen-deployment-rag created
+service/textgen-service-rag created
+deployment.apps/frontend-deployment-search created
+service/frontend-service-search created
+✅ Kubernetes manifests applied successfully!
+
+--- STEP 6: Verify Deployment Status ---
+⏳ Waiting for pods to start (this may take ~1 minute)...
+NAME                                          READY   STATUS              RESTARTS   AGE
+frontend-deployment-search-6648cd6675-q2b87   0/1     ContainerCreating   0          0s
+qdrant-deployment-7f6b7b5f5f-qs6p2            0/1     Pending             0          0s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     ContainerCreating   0          0s
+frontend-deployment-search-6648cd6675-q2b87   1/1     Running             0          2s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     RunContainerError   0          2s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     RunContainerError   1 (0s ago)   3s
+qdrant-deployment-7f6b7b5f5f-qs6p2            0/1     Pending             0            4s
+qdrant-deployment-7f6b7b5f5f-qs6p2            0/1     ContainerCreating   0            4s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     CrashLoopBackOff    1 (1s ago)   4s
+qdrant-deployment-7f6b7b5f5f-qs6p2            1/1     Running             0            5s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     CrashLoopBackOff    1 (13s ago)   16s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     RunContainerError   2 (0s ago)    17s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     CrashLoopBackOff    2 (12s ago)   29s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     CrashLoopBackOff    2 (23s ago)   40s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     RunContainerError   3 (1s ago)    42s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     CrashLoopBackOff    3 (14s ago)   55s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     RunContainerError   4 (1s ago)    85s
+qdrant-deployment-7f6b7b5f5f-qs6p2            1/1     Running             0             97s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     CrashLoopBackOff    4 (14s ago)   98s
+frontend-deployment-search-6648cd6675-q2b87   1/1     Running             0             2m14s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     RunContainerError   5 (1s ago)    2m50s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     CrashLoopBackOff    5 (14s ago)   3m3s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     CrashLoopBackOff    5 (2m11s ago)   5m
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     CrashLoopBackOff    5 (2m23s ago)   5m12s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     RunContainerError   6 (1s ago)      5m37s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     CrashLoopBackOff    6 (12s ago)     5m48s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     CrashLoopBackOff    6 (25s ago)     6m1s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     CrashLoopBackOff    6 (37s ago)     6m13s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     CrashLoopBackOff    6 (88s ago)     7m4s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     CrashLoopBackOff    6 (101s ago)    7m17s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     Terminating         6 (2m8s ago)    7m44s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     Terminating         6               7m45s
+frontend-deployment-search-6648cd6675-q2b87   1/1     Terminating         0               7m45s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     StartError          6               7m45s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     StartError          6               7m45s
+textgen-deployment-rag-7cccd9944d-cm8zc       0/1     StartError          6               7m45s
+frontend-deployment-search-6648cd6675-q2b87   0/1     Error               0               8m15s
+frontend-deployment-search-6648cd6675-q2b87   0/1     Error               0               8m16s
+frontend-deployment-search-6648cd6675-q2b87   0/1     Error               0               8m16s
+qdrant-deployment-7f6b7b5f5f-qs6p2            1/1     Terminating         0               8m16s
+qdrant-deployment-7f6b7b5f5f-qs6p2            0/1     Error               0               8m16s
+qdrant-deployment-7f6b7b5f5f-qs6p2            0/1     Error               0               8m17s
+qdrant-deployment-7f6b7b5f5f-qs6p2            0/1     Error               0               8m17s
+===========================================================
+🪵 Starting Deployment Logging
+Log file: log/deploy_instr.log
+Timestamp: 2025-11-09 20:48:13
+===========================================================
+-----------------------------------------------------------
+🚀 Starting Kubernetes deployment for mini-gen-search
+-----------------------------------------------------------
+--- STEP 1: Archive Application Files ---
+bash: ./deploy_instructions.sh: line 154: syntax error: unexpected end of file
+===========================================================
+🪵 Starting Deployment Logging
+Log file: log/deploy_instr.log
+Timestamp: 2025-11-09 20:51:32
+===========================================================
+-----------------------------------------------------------
+🚀 Starting Kubernetes deployment for mini-gen-search
+-----------------------------------------------------------
+--- STEP 1: Archive Application Files ---
+✅ Application files and Dockerfiles archived to **z_duplicates**.
+--- STEP 2: Load Environment Variables ---
+✅ Environment variables loaded from .env
+
+--- STEP 3: Create or Update Docker Hub Secret ---
+🔑 Creating or updating Kubernetes Docker Hub Secret...
+secret/docker-hub-secret created
+✅ Docker Hub Secret 'docker-hub-secret' created/updated.
+
+--- STEP 4: Determine Image Tags (SHAs) ---
+Determining unique image tags (Short SHAs) for submodules...
+✅ Frontend image tag determined: c1d6f3d
+✅ TextGen image tag determined: 5b31039
+
+--- STEP 5: Apply Kubernetes Manifests ---
+⚙️ Substituting variables (API Key and Image Tags) and applying Kubernetes manifests...
+persistentvolumeclaim/qdrant-pvc created
+service/qdrant-service created
+deployment.apps/qdrant-deployment created
+configmap/textgen-service-rag-config created
+deployment.apps/textgen-deployment-rag created
+service/textgen-service-rag created
+deployment.apps/frontend-deployment-search created
+service/frontend-service-search created
+✅ Kubernetes manifests applied successfully!
+
+--- STEP 6: Verify Deployment Status ---
+⏳ Waiting for pods to start (this may take ~1 minute)...
+NAME                                          READY   STATUS              RESTARTS   AGE
+frontend-deployment-search-6648cd6675-wvcwq   0/1     ContainerCreating   0          0s
+qdrant-deployment-7f6b7b5f5f-mqwl5            0/1     Pending             0          0s
+textgen-deployment-rag-7cccd9944d-tq6rn       0/1     ContainerCreating   0          0s
+textgen-deployment-rag-7cccd9944d-tq6rn       0/1     RunContainerError   0          3s
+frontend-deployment-search-6648cd6675-wvcwq   1/1     Running             0          4s
+qdrant-deployment-7f6b7b5f5f-mqwl5            0/1     Pending             0          4s
+qdrant-deployment-7f6b7b5f5f-mqwl5            0/1     ContainerCreating   0          4s
+textgen-deployment-rag-7cccd9944d-tq6rn       0/1     RunContainerError   1 (1s ago)   5s
+qdrant-deployment-7f6b7b5f5f-mqwl5            1/1     Running             0            6s
+textgen-deployment-rag-7cccd9944d-tq6rn       0/1     CrashLoopBackOff    1 (2s ago)   6s
+textgen-deployment-rag-7cccd9944d-tq6rn       0/1     RunContainerError   2 (1s ago)   22s
+textgen-deployment-rag-7cccd9944d-tq6rn       0/1     CrashLoopBackOff    2 (11s ago)   32s
+textgen-deployment-rag-7cccd9944d-tq6rn       0/1     Terminating         2 (13s ago)   34s
+textgen-deployment-rag-7cccd9944d-tq6rn       0/1     Terminating         2             34s
+frontend-deployment-search-6648cd6675-wvcwq   1/1     Terminating         0             34s
+textgen-deployment-rag-7cccd9944d-tq6rn       0/1     StartError          2             34s
+textgen-deployment-rag-7cccd9944d-tq6rn       0/1     StartError          2             35s
+textgen-deployment-rag-7cccd9944d-tq6rn       0/1     StartError          2             35s
+frontend-deployment-search-6648cd6675-wvcwq   0/1     Error               0             64s
+frontend-deployment-search-6648cd6675-wvcwq   0/1     Error               0             65s
+frontend-deployment-search-6648cd6675-wvcwq   0/1     Error               0             65s
+qdrant-deployment-7f6b7b5f5f-mqwl5            1/1     Terminating         0             65s
+qdrant-deployment-7f6b7b5f5f-mqwl5            0/1     Error               0             65s
+qdrant-deployment-7f6b7b5f5f-mqwl5            0/1     Error               0             66s
+qdrant-deployment-7f6b7b5f5f-mqwl5            0/1     Error               0             66s
