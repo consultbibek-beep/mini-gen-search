@@ -788,3 +788,40 @@ Resource: "apps/v1, Resource=deployments", GroupVersionKind: "apps/v1, Kind=Depl
 Name: "", Namespace: "default"
 from server for: "STDIN": resource name may not be empty
 ❌ **FAILURE in STEP 5:** Failed to apply Kubernetes manifests. Check if **k8s-manifests/k8s-manifests.yaml** exists and your **kubectl context** is correct.
+===========================================================
+🪵 Starting Deployment Logging
+Log file: log/deploy_instr.log
+Timestamp: 2025-11-09 21:02:57
+===========================================================
+-----------------------------------------------------------
+🚀 Starting Kubernetes deployment for mini-gen-search
+-----------------------------------------------------------
+--- STEP 1: Archive Application Files ---
+✅ Application files and Dockerfiles archived to **z_duplicates**.
+--- STEP 2: Load Environment Variables ---
+✅ Environment variables loaded from .env
+
+--- STEP 3: Create or Update Docker Hub Secret ---
+🔑 Creating or updating Kubernetes Docker Hub Secret...
+secret/docker-hub-secret unchanged
+✅ Docker Hub Secret 'docker-hub-secret' created/updated.
+
+--- STEP 4: Determine Image Tags (SHAs) ---
+Determining unique image tags (Short SHAs) for submodules...
+✅ Frontend image tag determined: c1d6f3d
+✅ TextGen image tag determined: 5b31039
+
+--- STEP 5: Apply Kubernetes Manifests ---
+⚙️ Substituting variables (API Key and Image Tags) and applying Kubernetes manifests...
+persistentvolumeclaim/qdrant-pvc unchanged
+service/qdrant-service unchanged
+deployment.apps/qdrant-deployment unchanged
+configmap/textgen-service-rag-config unchanged
+service/textgen-service-rag unchanged
+deployment.apps/frontend-deployment-search unchanged
+service/frontend-service-search unchanged
+error: error when retrieving current configuration of:
+Resource: "apps/v1, Resource=deployments", GroupVersionKind: "apps/v1, Kind=Deployment"
+Name: "", Namespace: "default"
+from server for: "STDIN": resource name may not be empty
+❌ **FAILURE in STEP 5:** Failed to apply Kubernetes manifests. Check if **k8s-manifests/k8s-manifests.yaml** exists and your **kubectl context** is correct.

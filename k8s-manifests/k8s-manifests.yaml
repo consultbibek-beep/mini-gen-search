@@ -82,10 +82,18 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-# ... (rest of metadata/spec)
+  name: textgen-deployment-rag
+  labels:
+    app: textgen-rag
+spec:
+  replicas: 1
+  selector: # <--- ADDED: Required for Deployment to manage pods
+    matchLabels:
+      app: textgen-rag
   template:
     metadata:
-# ...
+      labels:
+        app: textgen-rag # <--- ADDED: Label to match Service
     spec:
       imagePullSecrets:
         - name: docker-hub-secret
@@ -105,8 +113,7 @@ metadata:
               value: "qdrant-service"
             - name: QDRANT_PORT
               value: "6333"
-          # Volume mounts for the PDF file (REMOVED)
-      # volumes: (REMOVED)
+          # PDF Volume Mount Removed - Fixes CrashLoopBackOff
 
 ---
 
