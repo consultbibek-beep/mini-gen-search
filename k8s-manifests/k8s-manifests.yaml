@@ -15,7 +15,6 @@ spec:
   resources:
     requests:
       storage: 5Gi # Adjust size as needed
-
 ---
 
 # 2. Qdrant Service
@@ -55,7 +54,7 @@ spec:
     spec:
       containers:
         - name: qdrant
-          image: qdrant/qdrant:latest # Use a stable tag
+          image: "qdrant/qdrant:latest" # Quoted for safety
           ports:
             - containerPort: 6333
           volumeMounts:
@@ -74,8 +73,8 @@ kind: ConfigMap
 metadata:
   name: textgen-service-rag-config
 data:
-  GROQ_API_KEY: $GROQ_API_KEY
-
+  # FIXED: Quoted for safe substitution
+  GROQ_API_KEY: "$GROQ_API_KEY"
 ---
 
 # 5. TextGen (Backend) Deployment - RAG Enabled (textgen-deployment-rag)
@@ -87,19 +86,20 @@ metadata:
     app: textgen-rag
 spec:
   replicas: 1
-  selector: # <--- ADDED: Required for Deployment to manage pods
+  selector:
     matchLabels:
       app: textgen-rag
   template:
     metadata:
       labels:
-        app: textgen-rag # <--- ADDED: Label to match Service
+        app: textgen-rag
     spec:
       imagePullSecrets:
         - name: docker-hub-secret
       containers:
         - name: textgen-api
-          image: consultbibek/mini-gen-textgen-rag:$TEXTGEN_TAG
+          # FIXED: Quoted for safe substitution of $TEXTGEN_TAG
+          image: "consultbibek/mini-gen-textgen-rag:$TEXTGEN_TAG"
           imagePullPolicy: Always
           ports:
             - containerPort: 5001
@@ -113,7 +113,6 @@ spec:
               value: "qdrant-service"
             - name: QDRANT_PORT
               value: "6333"
-          # PDF Volume Mount Removed - Fixes CrashLoopBackOff
 
 ---
 
@@ -156,7 +155,8 @@ spec:
         - name: docker-hub-secret
       containers:
         - name: frontend-web
-          image: consultbibek/mini-gen-frontend-search:$FRONTEND_TAG
+          # FIXED: Quoted for safe substitution of $FRONTEND_TAG
+          image: "consultbibek/mini-gen-frontend-search:$FRONTEND_TAG"
           imagePullPolicy: Always
           ports:
             - containerPort: 5000

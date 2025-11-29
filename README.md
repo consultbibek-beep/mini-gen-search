@@ -12,7 +12,9 @@ url:
 http://localhost:8080/
 
 # git Commits Direct Command
-git add . && git commit -m "k8s update for pdf 2" && git push origin main
+git add . && git commit -m "textgen update for module" && git push origin main
+
+git add . && git commit -m "InvalidImageName" && git push origin main
 
 
 # The goal is to migrate:

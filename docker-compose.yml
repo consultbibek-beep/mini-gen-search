@@ -32,7 +32,7 @@ services:
       - QDRANT_PORT=6333
     volumes:
       # CRITICAL: Mount the PDF into the container where the RAG logic expects it
-      - ./138.pdf:/app/138.pdf
+      - ./textgen-service-rag/assets/138.pdf:/app/138.pdf
     depends_on:
       - qdrant # Ensure Qdrant starts before TextGen
     networks:
