@@ -1208,3 +1208,79 @@ qdrant-deployment-7f6b7b5f5f-hc68f            0/1     Error                    0
 qdrant-deployment-7f6b7b5f5f-hc68f            0/1     Error                    0          19m
 qdrant-deployment-7f6b7b5f5f-hc68f            0/1     Error                    0          19m
 qdrant-deployment-7f6b7b5f5f-hc68f            0/1     Error                    0          19m
+===========================================================
+🪵 Starting Deployment Logging
+Log file: log/deploy_instr.log
+Timestamp: 2025-11-29 20:50:38
+===========================================================
+-----------------------------------------------------------
+🚀 Starting Kubernetes deployment for mini-gen-search
+-----------------------------------------------------------
+--- STEP 1: Archive Application Files ---
+✅ Application files and Dockerfiles archived to **z_duplicates**.
+--- STEP 2: Load Environment Variables ---
+✅ Environment variables loaded from .env
+
+--- STEP 3: Create or Update Docker Hub Secret ---
+🔑 Creating or updating Kubernetes Docker Hub Secret...
+secret/docker-hub-secret created
+✅ Docker Hub Secret 'docker-hub-secret' created/updated.
+
+--- STEP 4: Determine Image Tags (SHAs) ---
+Determining unique image tags (Short SHAs) for submodules...
+✅ Frontend image tag determined: c1d6f3d
+✅ TextGen image tag determined: 8aefc4c
+
+--- STEP 5: Apply Kubernetes Manifests ---
+⚙️ Substituting variables (API Key and Image Tags) and applying Kubernetes manifests...
+persistentvolumeclaim/qdrant-pvc created
+service/qdrant-service created
+deployment.apps/qdrant-deployment created
+configmap/textgen-service-rag-config created
+deployment.apps/textgen-deployment-rag created
+service/textgen-service-rag created
+deployment.apps/frontend-deployment-search created
+service/frontend-service-search created
+✅ Kubernetes manifests applied successfully!
+
+--- STEP 6: Verify Deployment Status ---
+⏳ Waiting for pods to start (this may take ~1 minute)...
+NAME                                          READY   STATUS              RESTARTS   AGE
+frontend-deployment-search-6648cd6675-ll2b6   0/1     ContainerCreating   0          0s
+qdrant-deployment-7f6b7b5f5f-xmmqx            0/1     Pending             0          0s
+textgen-deployment-rag-5cd4d5f84d-m9lbp       0/1     ContainerCreating   0          0s
+frontend-deployment-search-6648cd6675-ll2b6   1/1     Running             0          2s
+frontend-deployment-search-6648cd6675-ll2b6   1/1     Running             0          3s
+qdrant-deployment-7f6b7b5f5f-xmmqx            0/1     Pending             0          20s
+qdrant-deployment-7f6b7b5f5f-xmmqx            0/1     ContainerCreating   0          20s
+qdrant-deployment-7f6b7b5f5f-xmmqx            1/1     Running             0          38s
+textgen-deployment-rag-5cd4d5f84d-m9lbp       1/1     Running             0          38s
+textgen-deployment-rag-5cd4d5f84d-m9lbp       0/1     Error               0          42s
+textgen-deployment-rag-5cd4d5f84d-m9lbp       1/1     Running             1 (2s ago)   43s
+textgen-deployment-rag-5cd4d5f84d-m9lbp       0/1     Error               1 (5s ago)   46s
+textgen-deployment-rag-5cd4d5f84d-m9lbp       0/1     CrashLoopBackOff    1 (12s ago)   58s
+textgen-deployment-rag-5cd4d5f84d-m9lbp       1/1     Running             2 (13s ago)   59s
+textgen-deployment-rag-5cd4d5f84d-m9lbp       0/1     Error               2 (16s ago)   62s
+frontend-deployment-search-6648cd6675-ll2b6   1/1     Running             0             70s
+textgen-deployment-rag-5cd4d5f84d-m9lbp       0/1     CrashLoopBackOff    2 (12s ago)   73s
+textgen-deployment-rag-5cd4d5f84d-m9lbp       1/1     Running             3 (28s ago)   89s
+textgen-deployment-rag-5cd4d5f84d-m9lbp       0/1     Error               3 (30s ago)   91s
+textgen-deployment-rag-5cd4d5f84d-m9lbp       0/1     CrashLoopBackOff    3 (15s ago)   106s
+textgen-deployment-rag-5cd4d5f84d-m9lbp       1/1     Running             4 (43s ago)   2m14s
+textgen-deployment-rag-5cd4d5f84d-m9lbp       0/1     Error               4 (45s ago)   2m16s
+textgen-deployment-rag-5cd4d5f84d-m9lbp       0/1     CrashLoopBackOff    4 (14s ago)   2m29s
+textgen-deployment-rag-5cd4d5f84d-m9lbp       0/1     Terminating         4 (78s ago)   3m33s
+textgen-deployment-rag-5cd4d5f84d-m9lbp       0/1     Terminating         4             3m33s
+frontend-deployment-search-6648cd6675-ll2b6   1/1     Terminating         0             3m33s
+frontend-deployment-search-6648cd6675-ll2b6   1/1     Terminating         0             3m33s
+textgen-deployment-rag-5cd4d5f84d-m9lbp       0/1     Error               4             3m33s
+textgen-deployment-rag-5cd4d5f84d-m9lbp       0/1     Error               4             3m34s
+textgen-deployment-rag-5cd4d5f84d-m9lbp       0/1     Error               4             3m34s
+frontend-deployment-search-6648cd6675-ll2b6   0/1     Error               0             4m3s
+frontend-deployment-search-6648cd6675-ll2b6   0/1     Error               0             4m4s
+frontend-deployment-search-6648cd6675-ll2b6   0/1     Error               0             4m4s
+qdrant-deployment-7f6b7b5f5f-xmmqx            1/1     Terminating         0             4m4s
+qdrant-deployment-7f6b7b5f5f-xmmqx            1/1     Terminating         0             4m4s
+qdrant-deployment-7f6b7b5f5f-xmmqx            0/1     Error               0             4m4s
+qdrant-deployment-7f6b7b5f5f-xmmqx            0/1     Error               0             4m5s
+qdrant-deployment-7f6b7b5f5f-xmmqx            0/1     Error               0             4m5s

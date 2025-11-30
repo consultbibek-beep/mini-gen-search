@@ -1,0 +1,63 @@
+# mini-gen-search/docker-compose.local.yaml (FOR LOCAL TESTING)
+version: "3.8"
+
+services:
+  # UPDATED SERVICE NAME
+  frontend-search:
+    # ----------------------------------------------------
+    # CHANGE: Use the pre-built local image tag instead of 'build'
+    image: consultbibek/mini-gen-frontend-search:local-test
+    # REMOVED: build section
+    # ----------------------------------------------------
+    container_name: mini-gen-frontend-search-local # CHANGE: Added -local suffix for clarity
+    ports:
+      # CHANGE: Map to host port 80 for standard web access during testing
+      - "8080:5000" # CHANGE: Map to host port 8080 instead of 80
+    environment:
+      # No change: Internal host remains the same
+      - TEXTGEN_HOST=http://textgen-rag:5001
+    depends_on:
+      - textgen-rag
+    networks:
+      - mini-net
+
+  # UPDATED SERVICE NAME (TextGen with RAG)
+  textgen-rag:
+    # ----------------------------------------------------
+    # CHANGE: Use the pre-built local image tag instead of 'build'
+    image: consultbibek/mini-gen-textgen-rag:local-test
+    # REMOVED: build section
+    # ----------------------------------------------------
+    container_name: mini-gen-textgen-rag-local # CHANGE: Added -local suffix for clarity
+    env_file:
+      - .env # No change: Still required for GROQ_API_KEY
+    # REMOVED: expose (not strictly needed for local testing, as network handles it)
+    environment:
+      - QDRANT_HOST=qdrant # No change: Links to the Qdrant service name
+      - QDRANT_PORT=6333
+    volumes:
+      # CRITICAL: Mount the PDF into the container where the RAG logic expects it
+      # No change: Retained critical volume mapping
+      - ./textgen-service-rag/assets/138.pdf:/app/138.pdf
+    depends_on:
+      - qdrant
+    networks:
+      - mini-net
+
+  # NEW: Qdrant Vector Database Service
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: qdrant-local # CHANGE: Added -local suffix for clarity
+    # REMOVED: ports mapping (6333:6333) as it's only needed internally by textgen-rag
+    # REMOVED: Mapping the port prevents conflicts if Qdrant is already running elsewhere.
+    volumes:
+      - qdrant_storage_local:/qdrant/storage # CHANGE: Renamed volume to avoid conflict with default
+    networks:
+      - mini-net
+
+networks:
+  mini-net:
+    driver: bridge
+
+volumes:
+  qdrant_storage_local: # CHANGE: Renamed volume for local persistence

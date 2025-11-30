@@ -2,11 +2,13 @@
 
 To Start:
 bibeks-MacBook-Air:~/workspace/mini-gen$ . ./deploy_instructions.sh
+    . ./deploy_instructions_local.sh
 bibeks-MacBook-Air:~/workspace/mini-gen$ 
 kubectl port-forward service/frontend-service-search 8080:80
 
 To Stop:
 bibeks-MacBook-Air:~/workspace/mini-gen$ . ./deploy_instructions_stop.sh
+bibeks-MacBook-Air:~/workspace/mini-gen$ . ./deploy_instructions_local_stop.sh
 
 url:
 http://localhost:8080/
@@ -15,6 +17,19 @@ http://localhost:8080/
 git add . && git commit -m "textgen update for module" && git push origin main
 
 git add . && git commit -m "InvalidImageName" && git push origin main
+
+# Debug:
+
+MacBook-Pro:~/workspace/mini-gen-search$ docker ps
+MacBook-Pro:~/workspace/mini-gen-search$ docker logs 4bf673a9ca22
+
+# Use the SERVICE NAME 'textgen-rag', not the CONTAINER NAME 'mini-gen-textgen-rag-local'
+docker compose -f docker-compose.local.yaml logs textgen-rag
+
+docker compose -f docker-compose.local.yaml logs frontend-search --tail=50
+
+    # 1. Force a rebuild of the TextGen image to apply the qdrant-client fix
+    docker compose -f docker-compose.local.yaml build --no-cache textgen-rag
 
 
 # The goal is to migrate:
